@@ -1,0 +1,51 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build run",
+            "type": "shell",
+            "command": "open /Users/meganminnear/Desktop/CS2261/visualboyadvance-m.app ./Project.gba",
+            "problemMatcher": [],
+            "dependsOn": [
+                "build"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "docker run --rm -it -v \"${PWD}:/gba\" aaaronic/gba-compiler:1.0",
+            "problemMatcher": []
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "docker run --rm -it -v \"${PWD}:/gba\" aaaronic/gba-compiler:1.0 bash -c 'cd /gba && make clean'",
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "C/C++: gcc build active file",
+            "command": "/usr/bin/gcc",
+            "args": [
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
