@@ -186,6 +186,7 @@ main:
 	.word	32767
 	.word	24319
 	.size	main, .-main
+	.comm	state,4,4
 	.comm	screenHeight,4,4
 	.comm	screenWidth,4,4
 	.comm	padding,4,4

@@ -35,8 +35,14 @@ int screenWidth;
 int screenHeight;
 
 
+enum State {LOSE, WIN, GAME};
+int state;
+
+
+
 void initialize();
 void updateGame();
+void updatePaddlePosition();
 
 int main() {
     initialize();

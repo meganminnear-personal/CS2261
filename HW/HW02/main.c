@@ -10,9 +10,15 @@ int padding;
 int screenWidth;
 int screenHeight;
 
+// state machines
+enum State {LOSE, WIN, GAME};
+int state;
+
+
 // prototypes
 void initialize();
 void updateGame();
+void updatePaddlePosition();
 
 int main() {
     initialize();
