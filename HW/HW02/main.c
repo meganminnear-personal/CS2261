@@ -10,24 +10,42 @@ int padding;
 int screenWidth;
 int screenHeight;
 
+u16 rectType = MIDGREY;
+int rectX, rectY, prevRectY;
+
 // state machines
 enum State {LOSE, WIN, GAME};
 int state;
+
+int goodCount;
+int badCount;
 
 
 // prototypes
 void initialize();
 void updateGame();
 void updatePaddlePosition();
+void drawGoodRect();
+void checkRects();
 
 int main() {
     initialize();
     while(1) {
+        // checks whether should update with new good or bad rect
+        checkRects();
         updatePaddlePosition();
+        // updates falling rectangle Y by 1 pixels
+        updateRectPosition();
 
         waitForVBlank();
         drawRect(prevPaddleX, paddleY, paddleSize, 5, WHITE);
         drawRect(paddleX, paddleY, paddleSize, 5, PINK);
+        drawRect(rectX, prevRectY, 20, 30, WHITE);
+        drawRect(rectX, rectY, 20, 30, rectType);
+
+        if (collision(rectX, rectY, 20, 30, paddleX, paddleY, paddleSize, 5)) {
+
+        }
     }
 
 }
@@ -53,6 +71,21 @@ void updateGame() {
 
 }
 
+void checkRects() {
+    if (rectY == (screenHeight + padding)) {
+            // uses 0 or 1 to decide rectangle type
+            int goodbad = rand() % 2;
+            // erase old rect
+            drawRect(rectX, rectY, 20, 30, WHITE);
+            // initialize good or bad rect
+            if (goodbad == 0) {
+                drawGoodRect();
+            } else {
+                drawBadRect();
+            }
+    }
+}
+
 void updatePaddlePosition() {
     int paddleSpeed = 1;
     prevPaddleX = paddleX;
@@ -71,4 +104,35 @@ void updatePaddlePosition() {
         paddleX = 239 - paddleSize - padding;
     }
 
+}
+
+void updateRectPosition() {
+    prevRectY = rectY;
+    rectY++;
+}
+
+void drawGoodRect() {
+    rectX = rand() % screenWidth;
+    if (rectX >= 210) {
+        rectX = 210 - padding;
+    } else if (rectX == 0) {
+        rectX = padding;
+    }
+    rectY = padding;
+    prevRectY = rectY;
+    rectType = GOLD;
+    drawRect(rectX, rectY, 20, 30, rectType);
+}
+
+void drawBadRect() {
+    rectX = (rand() % screenWidth);
+    if (rectX >= 210) {
+        rectX = 210 - padding;
+    } else if (rectX == 0) {
+        rectX = padding;
+    }
+    rectY = padding;
+    prevRectY = rectY;
+    rectType = MIDGREY;
+    drawRect(rectX, rectY, 20, 30, rectType);
 }

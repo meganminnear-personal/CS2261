@@ -38,6 +38,8 @@ extern volatile unsigned short *videoBuffer;
 #define MAGENTA COLOR(31,0,31)
 #define YELLOW COLOR(31,31,0)
 #define PINK COLOR(31, 23, 23)
+#define GOLD COLOR(31, 29, 17);
+#define MIDGREY COLOR(17, 16, 15);
 
 // Mode 3 Drawing Functions
 void setPixel(int col, int row, unsigned short color);

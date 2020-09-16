@@ -10,17 +10,17 @@
 typedef unsigned short u16;
 # 25 "myLib.h"
 extern volatile unsigned short *videoBuffer;
-# 43 "myLib.h"
+# 45 "myLib.h"
 void setPixel(int col, int row, unsigned short color);
 void drawRect(int col, int row, int width, int height, unsigned short color);
 void fillScreen(unsigned short color);
 
 
 void waitForVBlank();
-# 68 "myLib.h"
+# 70 "myLib.h"
 extern unsigned short oldButtons;
 extern unsigned short buttons;
-# 78 "myLib.h"
+# 80 "myLib.h"
 int collision(int colA, int rowA, int widthA, int heightA, int colB, int rowB, int widthB, int heightB);
 # 2 "main.c" 2
 
@@ -34,6 +34,9 @@ int padding;
 int screenWidth;
 int screenHeight;
 
+u16 rectType = ((17) | (16)<<5 | (15)<<10);;
+int rectX, rectY, prevRectY;
+
 
 enum State {LOSE, WIN, GAME};
 int state;
@@ -43,15 +46,23 @@ int state;
 void initialize();
 void updateGame();
 void updatePaddlePosition();
+void drawGoodRect();
+void checkRects();
 
 int main() {
     initialize();
     while(1) {
+
+        checkRects();
         updatePaddlePosition();
+
+        updateRectPosition();
 
         waitForVBlank();
         drawRect(prevPaddleX, paddleY, paddleSize, 5, ((31) | (31)<<5 | (31)<<10));
         drawRect(paddleX, paddleY, paddleSize, 5, ((31) | (23)<<5 | (23)<<10));
+        drawRect(rectX, prevRectY, 20, 30, ((31) | (31)<<5 | (31)<<10));
+        drawRect(rectX, rectY, 20, 30, rectType);
     }
 
 }
@@ -77,6 +88,21 @@ void updateGame() {
 
 }
 
+void checkRects() {
+    if (rectY == (screenHeight + padding)) {
+
+            int goodbad = rand() % 2;
+
+            drawRect(rectX, rectY, 20, 30, ((31) | (31)<<5 | (31)<<10));
+
+            if (goodbad == 0) {
+                drawGoodRect();
+            } else {
+                drawBadRect();
+            }
+    }
+}
+
 void updatePaddlePosition() {
     int paddleSpeed = 1;
     prevPaddleX = paddleX;
@@ -95,4 +121,35 @@ void updatePaddlePosition() {
         paddleX = 239 - paddleSize - padding;
     }
 
+}
+
+void updateRectPosition() {
+    prevRectY = rectY;
+    rectY++;
+}
+
+void drawGoodRect() {
+    rectX = rand() % screenWidth;
+    if (rectX >= 210) {
+        rectX = 210 - padding;
+    } else if (rectX == 0) {
+        rectX = padding;
+    }
+    rectY = padding;
+    prevRectY = rectY;
+    rectType = ((31) | (29)<<5 | (17)<<10);;
+    drawRect(rectX, rectY, 20, 30, rectType);
+}
+
+void drawBadRect() {
+    rectX = (rand() % screenWidth);
+    if (rectX >= 210) {
+        rectX = 210 - padding;
+    } else if (rectX == 0) {
+        rectX = padding;
+    }
+    rectY = padding;
+    prevRectY = rectY;
+    rectType = ((17) | (16)<<5 | (15)<<10);;
+    drawRect(rectX, rectY, 20, 30, rectType);
 }
