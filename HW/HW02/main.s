@@ -374,101 +374,154 @@ main:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	push	{r7, fp, lr}
-	ldr	r3, .L42
-	sub	sp, sp, #12
+	ldr	r3, .L46
+	sub	sp, sp, #20
 	mov	lr, pc
 	bx	r3
-	ldr	fp, .L42+4
-	ldr	r10, .L42+8
-	ldr	r5, .L42+12
-	ldr	r9, .L42+16
-	ldr	r8, .L42+20
-	ldr	r7, .L42+24
-	ldr	r4, .L42+28
-	ldr	r6, .L42+32
-	b	.L40
-.L39:
-	ldr	r3, .L42+36
-	mov	lr, pc
-	bx	r3
-	ldr	r3, [r5]
-	add	r2, r3, #1
-	str	r3, [r9]
-	ldr	r3, .L42+40
-	str	r2, [r5]
-	mov	lr, pc
-	bx	r3
-	ldr	r3, .L42+44
-	ldr	r0, .L42+48
-	str	r3, [sp]
-	ldr	r2, [r8]
-	mov	r3, #5
-	ldr	r1, [r7]
-	ldr	r0, [r0]
-	mov	lr, pc
-	bx	r4
-	ldr	r2, .L42+52
-	ldr	r0, .L42+56
-	str	r2, [sp]
-	mov	r3, #5
-	ldr	r2, [r8]
-	ldr	r1, [r7]
-	ldr	r0, [r0]
-	mov	lr, pc
-	bx	r4
-	ldr	r3, .L42+44
-	mov	r2, #20
-	str	r3, [sp]
-	ldr	r1, [r9]
-	mov	r3, #30
-	ldr	r0, [r6]
-	mov	lr, pc
-	bx	r4
-	ldr	r3, .L42+60
-	ldrh	r2, [r3]
-	ldr	r1, [r5]
-	str	r2, [sp]
-	mov	r3, #30
-	mov	r2, #20
-	ldr	r0, [r6]
-	mov	lr, pc
-	bx	r4
-.L40:
-	ldr	r3, [fp]
-	ldr	r1, [r10]
-	ldr	r2, [r5]
+	ldr	r2, .L46+4
+	ldr	r3, .L46+8
+	ldr	r1, [r2]
+	ldr	r4, .L46+12
+	ldr	r3, [r3]
+	ldr	r2, [r4]
+	ldr	fp, .L46+16
+	ldr	r8, .L46+20
+	ldr	r7, .L46+24
+	ldr	r5, .L46+28
+	ldr	r10, .L46+32
+	ldr	r6, .L46+36
+	ldr	r9, .L46+40
 	add	r3, r3, r1
+	b	.L41
+.L39:
+	ldr	r3, .L46+44
+	mov	lr, pc
+	bx	r3
+	ldr	r3, [r4]
+	add	r2, r3, #1
+	str	r3, [fp]
+	ldr	r3, .L46+48
+	str	r2, [r4]
+	mov	lr, pc
+	bx	r3
+	str	r9, [sp]
+	ldr	r0, .L46+52
+	mov	r3, #5
+	ldr	r2, [r8]
+	ldr	r1, [r7]
+	ldr	r0, [r0]
+	mov	lr, pc
+	bx	r5
+	ldr	r2, .L46+56
+	mov	r3, #5
+	str	r2, [sp]
+	ldr	r1, [r7]
+	ldr	r2, [r8]
+	ldr	r0, [r10]
+	mov	lr, pc
+	bx	r5
+	mov	r3, #30
+	mov	r2, #20
+	ldr	r1, [fp]
+	ldr	r0, [r6]
+	str	r9, [sp]
+	mov	lr, pc
+	bx	r5
+	ldr	r3, .L46+60
+	ldrh	r2, [r3]
+	ldr	r1, [r4]
+	mov	r3, #30
+	str	r2, [sp]
+	ldr	r0, [r6]
+	mov	r2, #20
+	mov	lr, pc
+	bx	r5
+	mov	r0, #5
+	ldr	r1, [r8]
+	ldr	r2, [r7]
+	ldr	r3, [r10]
+	str	r0, [sp, #12]
+	str	r1, [sp, #8]
+	str	r2, [sp, #4]
+	str	r3, [sp]
+	mov	r2, #20
+	mov	r3, #30
+	ldr	r1, [r4]
+	ldr	r0, [r6]
+	ldr	ip, .L46+64
+	mov	lr, pc
+	bx	ip
+	cmp	r0, #0
+	bne	.L40
+	ldr	r3, .L46+8
+	ldr	r2, .L46+4
+	ldr	r3, [r3]
+	ldr	r2, [r2]
+	add	r3, r3, r2
+	ldr	r2, [r4]
+.L41:
 	cmp	r3, r2
 	bne	.L39
-	ldr	r3, .L42+64
+	ldr	r3, .L46+68
 	mov	lr, pc
 	bx	r3
 	b	.L39
-.L43:
+.L40:
+	ldr	r3, .L46+72
+	ldr	r3, [r3]
+	cmp	r3, #0
+	ldreq	r2, .L46+76
+	ldrne	r2, .L46+80
+	ldr	r3, [r2]
+	add	r3, r3, #1
+	str	r3, [r2]
+	mov	r3, #30
+	mov	r2, #20
+	str	r9, [sp]
+	ldr	r1, [r4]
+	ldr	r0, [r6]
+	mov	lr, pc
+	bx	r5
+	ldr	r3, .L46+8
+	ldr	r2, .L46+4
+	ldr	r3, [r3]
+	ldr	r2, [r2]
+	add	r3, r3, r2
+	mov	r2, r3
+	str	r3, [r4]
+	b	.L41
+.L47:
 	.align	2
-.L42:
+.L46:
 	.word	initialize
-	.word	screenHeight
 	.word	padding
+	.word	screenHeight
 	.word	rectY
 	.word	prevRectY
 	.word	paddleSize
 	.word	paddleY
 	.word	drawRect
+	.word	paddleX
 	.word	rectX
+	.word	32767
 	.word	updatePaddlePosition
 	.word	waitForVBlank
-	.word	32767
 	.word	prevPaddleX
 	.word	24319
-	.word	paddleX
 	.word	.LANCHOR0
+	.word	collision
 	.word	checkRects.part.0
+	.word	.LANCHOR1
+	.word	goodCount
+	.word	badCount
 	.size	main, .-main
+	.comm	badCount,4,4
+	.comm	goodCount,4,4
 	.comm	state,4,4
 	.comm	prevRectY,4,4
 	.comm	rectY,4,4
 	.comm	rectX,4,4
+	.global	rectColor
 	.global	rectType
 	.comm	screenHeight,4,4
 	.comm	screenWidth,4,4
@@ -482,8 +535,15 @@ main:
 	.data
 	.align	1
 	.set	.LANCHOR0,. + 0
-	.type	rectType, %object
-	.size	rectType, 2
-rectType:
+	.type	rectColor, %object
+	.size	rectColor, 2
+rectColor:
 	.short	15889
+	.bss
+	.align	2
+	.set	.LANCHOR1,. + 0
+	.type	rectType, %object
+	.size	rectType, 4
+rectType:
+	.space	4
 	.ident	"GCC: (devkitARM release 53) 9.1.0"

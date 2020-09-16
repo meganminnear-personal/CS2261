@@ -34,12 +34,16 @@ int padding;
 int screenWidth;
 int screenHeight;
 
-u16 rectType = ((17) | (16)<<5 | (15)<<10);;
+int rectType = 0;
+u16 rectColor = ((17) | (16)<<5 | (15)<<10);;
 int rectX, rectY, prevRectY;
 
 
 enum State {LOSE, WIN, GAME};
 int state;
+
+int goodCount;
+int badCount;
 
 
 
@@ -62,7 +66,17 @@ int main() {
         drawRect(prevPaddleX, paddleY, paddleSize, 5, ((31) | (31)<<5 | (31)<<10));
         drawRect(paddleX, paddleY, paddleSize, 5, ((31) | (23)<<5 | (23)<<10));
         drawRect(rectX, prevRectY, 20, 30, ((31) | (31)<<5 | (31)<<10));
-        drawRect(rectX, rectY, 20, 30, rectType);
+        drawRect(rectX, rectY, 20, 30, rectColor);
+
+        if (collision(rectX, rectY, 20, 30, paddleX, paddleY, paddleSize, 5)) {
+            if (rectType == 0) {
+                goodCount++;
+            } else {
+                badCount++;
+            }
+            drawRect(rectX, rectY, 20, 30, ((31) | (31)<<5 | (31)<<10));
+            rectY = screenHeight + padding;
+        }
     }
 
 }
@@ -137,8 +151,8 @@ void drawGoodRect() {
     }
     rectY = padding;
     prevRectY = rectY;
-    rectType = ((31) | (29)<<5 | (17)<<10);;
-    drawRect(rectX, rectY, 20, 30, rectType);
+    rectColor = ((31) | (29)<<5 | (17)<<10);;
+    drawRect(rectX, rectY, 20, 30, rectColor);
 }
 
 void drawBadRect() {
@@ -150,6 +164,6 @@ void drawBadRect() {
     }
     rectY = padding;
     prevRectY = rectY;
-    rectType = ((17) | (16)<<5 | (15)<<10);;
-    drawRect(rectX, rectY, 20, 30, rectType);
+    rectColor = ((17) | (16)<<5 | (15)<<10);;
+    drawRect(rectX, rectY, 20, 30, rectColor);
 }

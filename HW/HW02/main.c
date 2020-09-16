@@ -10,7 +10,8 @@ int padding;
 int screenWidth;
 int screenHeight;
 
-u16 rectType = MIDGREY;
+int rectType = 0;
+u16 rectColor = MIDGREY;
 int rectX, rectY, prevRectY;
 
 // state machines
@@ -41,10 +42,16 @@ int main() {
         drawRect(prevPaddleX, paddleY, paddleSize, 5, WHITE);
         drawRect(paddleX, paddleY, paddleSize, 5, PINK);
         drawRect(rectX, prevRectY, 20, 30, WHITE);
-        drawRect(rectX, rectY, 20, 30, rectType);
+        drawRect(rectX, rectY, 20, 30, rectColor);
 
         if (collision(rectX, rectY, 20, 30, paddleX, paddleY, paddleSize, 5)) {
-
+            if (rectType == 0) {
+                goodCount++;
+            } else {
+                badCount++;
+            }
+            drawRect(rectX, rectY, 20, 30, WHITE);
+            rectY = screenHeight + padding;
         }
     }
 
@@ -120,8 +127,8 @@ void drawGoodRect() {
     }
     rectY = padding;
     prevRectY = rectY;
-    rectType = GOLD;
-    drawRect(rectX, rectY, 20, 30, rectType);
+    rectColor = GOLD;
+    drawRect(rectX, rectY, 20, 30, rectColor);
 }
 
 void drawBadRect() {
@@ -133,6 +140,6 @@ void drawBadRect() {
     }
     rectY = padding;
     prevRectY = rectY;
-    rectType = MIDGREY;
-    drawRect(rectX, rectY, 20, 30, rectType);
+    rectColor = MIDGREY;
+    drawRect(rectX, rectY, 20, 30, rectColor);
 }
